@@ -3,6 +3,15 @@ Find Waldo and His Friends Using Computer Vision
 
 ![Image](https://github.com/JaredBaileyDuke/wheres-waldo/blob/main/images/Waldo_Friends.jpg)
 
+## Streamlit App
+### Available on HuggingFace
+https://huggingface.co/spaces/JaredBailey/WheresWaldo
+
+### Run locally
+```bash
+streamlit run app.py
+```
+
 ## Introduction
 ### Problem
 
