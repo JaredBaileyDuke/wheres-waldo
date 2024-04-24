@@ -1,0 +1,13 @@
+path: /content/gdrive/My Drive/Colab Notebooks/One_Page_Heads
+train: images/train
+val: images/val
+test: images/test
+
+# Classes
+names:
+  0: Waldo
+  1: Wenda
+  2: Odlaw
+  3: Wizard
+  4: Woof
+  
