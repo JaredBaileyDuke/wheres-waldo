@@ -44,7 +44,7 @@ The data is too large to store in this repo, even in a zip file format. The data
 
 ### Modeling
 #### Process
-Modeling was perform with Google Colab and the use of a Google TPU. A notebook is provided in the notebooks folder showcasing the work.
+Modeling was perform with Google Colab and the use of a Google TPU. 2 notebooks are provided in the notebooks folder showcasing the work (One searching for character heads and one for character heads + bodies). The final model chosen was the head model as it performed better. Despite the additional pixel size of the bounding boxes for the head + body model, the frequent body obstructions in the illustrations created difficulty for the model to learn the character patterns.
 
 The setup.py file allows for users to process the data, train the model, perform inference on the test data, and save out the results. Several helper scripts are provided in the scripts folder to assist.
 - tiling.py - for splitting the raw images into their individual tiles of 640x640 pixels with overlaps of 40 pixels between tiles
