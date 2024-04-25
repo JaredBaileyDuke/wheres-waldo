@@ -82,5 +82,4 @@ model, results, P, R, mAP50, mAP = train_model(processed_data_dir=processed_data
 # Model inference on the test data
 test_P, test_R, test_mAP50, test_mAP = model_inference(model, processed_data_dir=processed_data_dir)
 
-# Save the model
-model.save("model.pt")
+# Model is automatically saved
