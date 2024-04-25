@@ -16,12 +16,12 @@ streamlit run streamlit/app.py
 ### Problem
 Where's Waldo is an illustrated children's book containing a challenge: Can the reader find Waldo and his friends in a series of very complex illustrations? 
 
-The challenge is difficult because of the large size of the illustrations, the small size of the desired characters, and frequent obstructions in front of the desired characters. As seen in the image above, Waldo's friends have a many similarities, adding to the challenge.
+The challenge is difficult because of the large size of the illustrations, the small size of the desired characters, and frequent obstructions in front of the desired characters. As seen in the image above, Waldo's friends have many similarities, adding to the challenge.
 
 ### Past Work
-Many people have attempted to find Waldo in the past, but not his friends. As well, past attempts focused on using high resolution images in near perfect lighting conditions. There are several common datasets used frequently amongst these projects. There is also a project using a robot with imperfect lighting to point to Waldo with a rubber hand. This robot makes use of high resolution photography.
+Many people have attempted to find Waldo in the past, but not his friends. As well, past attempts focused on using high resolution images in near perfect lighting conditions with perfectly flat book pages. There are several common datasets used frequently amongst these projects. There is also a project using a robot with imperfect lighting to point to Waldo with a rubber hand. This robot makes use of high resolution photography. These models make us of everything from simple CNNs, to complex inception and Google AutoML architechtures.
 
-A few links to these projects:
+Links to a few of these projects:
 - https://medium.com/@reece.riherd_73510/can-a-computer-answer-wheres-waldo-using-machine-learning-to-find-waldo-362ee674fb3f
 - https://medium.com/analytics-vidhya/finding-waldo-using-a-simple-convolutional-neural-network-1604cb4d2e55
 - https://github.com/arrufat/wallyfinder
@@ -33,9 +33,9 @@ This project set out to have the user find Waldo using a cell phone camera. This
 ## Training
 ### Data
 #### Overview
-The data was gathered using an iPhone X. The images are of single pages of the book, as capturing 2 pages at one time was too low a resolution for the model to handle.
+The data was gathered using an iPhone X from 2017. The images are of single pages of the book, as capturing 2 pages at one time was too low a resolution for the model to handle.
 
-The images were tiled to allow for input to the model without the reducing the image size to 640x640 and thereby losing valuable pixels. The tiles were given overlaps of 40 pixels to help reduce the chance that a character would be split across multiple tiles and missed by the model.
+The images were tiled to allow for input to the model without reducing the image size (to 640x640 pixels) and thereby losing valuable pixels and information. The tiles were given overlaps of 40 pixels to help reduce the chance that a character on an image edge would be split across multiple tiles and missed by the model.
 
 Images were then augmented to allow for rotation at 90, 180, and 270 degrees. This simulated a phone not always taking a photo at the desired rotation when used from above and pointing down at the book. As well, images were given contrast to simulate different lighting conditions.
 
@@ -44,12 +44,12 @@ The data is too large to store in this repo, even in a zip file format. The data
 
 ### Modeling
 #### Process
-Modeling was perform with Google Colab and the use of a Google TPU. 2 notebooks are provided in the notebooks folder showcasing the work (One searching for character heads and one for character heads + bodies). The final model chosen was the head model as it performed better. Despite the additional pixel size of the bounding boxes for the head + body model, the frequent body obstructions in the illustrations created difficulty for the model to learn the character patterns.
+Modeling was perform with Google Colab and the use of a Google TPU. 2 notebooks are provided in the notebooks folder showcasing the work (One searching for character heads and one for character heads + bodies). The final model chosen was the head model as it performed better. Despite the additional pixel size of the bounding boxes for the head + body model, the frequent body obstructions in the illustrations created difficulty for the head + body model to learn the character patterns.
 
-The setup.py file allows for users to process the data, train the model, perform inference on the test data, and save out the results. Several helper scripts are provided in the scripts folder to assist.
+The setup.py file allows for users to process the data, train the model, perform inference on the test data, and save out the results. Several helper scripts are provided in the scripts folder.
 - tiling.py - for splitting the raw images into their individual tiles of 640x640 pixels with overlaps of 40 pixels between tiles
 - data_augmentation.py - for rotating images (since phone cameras sometimes rotate images in surprising ways to the user) and increasing the image contrast (50% brighter and 50% darker) to simulate different lighting conditions
-- model_training.py - for training the model using ultralytics (with inference on validation data), performing inference on the test data, saving the test images with predicted bounding boxes, gathering evaluation metrics, and saving the model
+- model_training.py - for training the model using ultralytics, as well as performing inference on the validation and test data, saving the test images with predicted bounding boxes, gathering evaluation metrics, and saving the best model
 
 The setup.py file can be run from the command line.
 ```bash
@@ -57,10 +57,10 @@ python setup.py
 ```
 
 #### Naive Model
-As models were not trained on the characters of Waldo and his friends, the models do not have a way of identifying them. This results in Naive YOLOv8 model that produces 0 predictions.
+As foundation models were not trained on the characters of Waldo and his friends, the models do not have a way of identifying them. This results in a Naive YOLOv8 model that produces no predictions.
 
 #### Non-Deep Learning Approach
 Non-deep learning approaches are not viable for this problem. This is due to several reasons.
 - Classical models such as tree based and GLMs predict a single number. They do not predict 4 points to make a bounding box, classification, and confidence score all at once as a deep learning model can.
-- In non-deep learning approaches images must be flattened in order to form a feature table. As these characters are quite small and move from picture to picture, the predictive columns are therefore different from illustration to illustration. This makes learning impossible as no feature has a chance to learn on more than one illustration.
-- The data size is wildly large to be handled by a classical model (640x640 pixels over 3 channels for 2,300+ images). The use of convolutional layers makes training possible with today's computing resources.
+- In non-deep learning approaches images must be flattened in order to form a feature table. As these characters are quite small and move from illustration to illustration, the predictive columns are therefore different from illustration to illustration. This makes learning impossible as no feature is consistently predictive across illustrations.
+- The data size is wildly large to be handled by a classical model (640x640 pixels over 3 channels for 2,300+ images). The use of convolutional layers in deep learning makes training possible with today's computing resources.
