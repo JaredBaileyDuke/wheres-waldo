@@ -9,7 +9,7 @@ https://huggingface.co/spaces/JaredBailey/WheresWaldo
 
 ### Run locally
 ```bash
-streamlit run app.py
+streamlit run streamlit/app.py
 ```
 
 ## Introduction
@@ -50,6 +50,11 @@ The setup.py file allows for users to process the data, train the model, perform
 - tiling.py - for splitting the raw images into their individual tiles of 640x640 pixels with overlaps of 40 pixels between tiles
 - data_augmentation.py - for rotating images (since phone cameras sometimes rotate images in surprising ways to the user) and increasing the image contrast (50% brighter and 50% darker) to simulate different lighting conditions
 - model_training.py - for training the model using ultralytics (with inference on validation data), performing inference on the test data, saving the test images with predicted bounding boxes, gathering evaluation metrics, and saving the model
+
+The setup.py file can be run from the command line.
+```bash
+python setup.py
+```
 
 #### Naive Model
 As models were not trained on the characters of Waldo and his friends, the models do not have a way of identifying them. This results in Naive YOLOv8 model that produces 0 predictions.
