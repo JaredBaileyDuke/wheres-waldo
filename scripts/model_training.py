@@ -1,3 +1,6 @@
+# model training code attribution (YouTube Handle): Computer Vision Engineer
+# YouTube: https://www.youtube.com/watch?v=m9fH9OWn8YM&t=2078s
+
 #####
 ###
 # 00 Imports
