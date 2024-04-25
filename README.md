@@ -43,9 +43,19 @@ Images were then augmented to allow for rotation at 90, 180, and 270 degrees. Th
 The data is too large to store in this repo, even in a zip file format. The data has been stored in a Box folder, and access can be granted as requested.
 
 ### Modeling
+#### Process
 Modeling was perform with Google Colab and the use of a Google TPU. A notebook is provided in the notebooks folder showcasing the work.
 
 The setup.py file allows for users to process the data, train the model, perform inference on the test data, and save out the results. Several helper scripts are provided in the scripts folder to assist.
 - tiling.py - for splitting the raw images into their individual tiles of 640x640 pixels with overlaps of 40 pixels between tiles
 - data_augmentation.py - for rotating images (since phone cameras sometimes rotate images in surprising ways to the user) and increasing the image contrast (50% brighter and 50% darker) to simulate different lighting conditions
-- model_training.py - for training the model using ultralytics (with inference on validation data), performing inference on the test data, saving the test images with predicted bounding boxes, gathering evaluation metrics, and saving the mol
+- model_training.py - for training the model using ultralytics (with inference on validation data), performing inference on the test data, saving the test images with predicted bounding boxes, gathering evaluation metrics, and saving the model
+
+#### Naive Model
+As models were not trained on the characters of Waldo and his friends, the models do not have a way of identifying them. This results in Naive YOLOv8 model that produces 0 predictions.
+
+#### Non-Deep Learning Approach
+Non-deep learning approaches are not viable for this problem. This is due to several reasons.
+- Classical models such as tree based and GLMs predict a single number. They do not predict 4 points to make a bounding box, classification, and confidence score all at once as a deep learning model can.
+- In non-deep learning approaches images must be flattened in order to form a feature table. As these characters are quite small and move from picture to picture, the predictive columns are therefore different from illustration to illustration. This makes learning impossible as no feature has a chance to learn on more than one illustration.
+- The data size is wildly large to be handled by a classical model (640x640 pixels over 2,300 images). The use of convolutional layers makes training possible with today's computing resources.
