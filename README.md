@@ -58,4 +58,4 @@ As models were not trained on the characters of Waldo and his friends, the model
 Non-deep learning approaches are not viable for this problem. This is due to several reasons.
 - Classical models such as tree based and GLMs predict a single number. They do not predict 4 points to make a bounding box, classification, and confidence score all at once as a deep learning model can.
 - In non-deep learning approaches images must be flattened in order to form a feature table. As these characters are quite small and move from picture to picture, the predictive columns are therefore different from illustration to illustration. This makes learning impossible as no feature has a chance to learn on more than one illustration.
-- The data size is wildly large to be handled by a classical model (640x640 pixels over 2,300 images). The use of convolutional layers makes training possible with today's computing resources.
+- The data size is wildly large to be handled by a classical model (640x640 pixels over 3 channels for 2,300+ images). The use of convolutional layers makes training possible with today's computing resources.
